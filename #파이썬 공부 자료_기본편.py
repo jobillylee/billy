@@ -1,8 +1,5 @@
 #파이썬 공부 자료_기본편(21.12.27)
 
-from typing import _ProtocolMeta
-
-
 <기본편>
     <01.데이터 타입>
         #가.변수
