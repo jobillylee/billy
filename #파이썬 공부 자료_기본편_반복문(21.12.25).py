@@ -13,7 +13,7 @@
         3
         4
 
-        #나.짝수만 출력
+        #짝수만 출력
         myfunc=[1,2,3,4]
         for abc in myfunc:
             if abc%2==1:
@@ -31,5 +31,14 @@
         1
         2
         3
+
+        #list comprehension
+        my_func=[1,2,3,4,5]
+        even=[i+1 for i in my_func if i%2==0]
+        #for 문을 반복해서 수행하는데, if 구문에 적합할 시 i 리턴값에 +1한 값을 even에 저장한다
+        even
+        [3,5,7,9,11]
+
+
         
 
