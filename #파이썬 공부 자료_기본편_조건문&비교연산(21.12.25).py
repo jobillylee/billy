@@ -40,4 +40,16 @@
             print('거짓')
         '참'/'거짓'
 
+    <6.논리연산자>
+        #and
+        #모든 조건이 만족할 때 참으로 인식
+        true and true and false
+        False
+        true and true and True
+        True
+
+        #or
+        #하나라도 조건이 만족하면 참으로 인식
+        true or false or False
+        True
         
