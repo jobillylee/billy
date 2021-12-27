@@ -1,5 +1,8 @@
 #파이썬 공부 자료_기본편(21.12.27)
 
+from typing import _ProtocolMeta
+
+
 <기본편>
     <01.데이터 타입>
         #가.변수
@@ -238,9 +241,78 @@
         len(a)
         5
 
-        #문자 쪼개기(split)
+        #나.문자 쪼개기(split)
         #split을 사용해 원하는 기준에 맞춰 문자를 나눠 list로 저장한다
+        # 변수 지정 없는 split는 함수 적용 후 바로 이전 상태로 회귀, 변형된 상태가 계속되기 원하면 변수 지정 필수
         a='나는 나일까? 너일까?'
         a.split()
         ['나는','나일까?', '너일까?']
+        a.split('?')
+        ['나는 나일까', ' 너일까', '']
+        a[0]
+        '나는 나일까'
+
+        #다.대소문자 (lower / upper)
+        a='my Little babY'
+        a.lower()
+        'my little baby'
+        a.upper()
+        'MY LITTLE BABY'
+
+        #라.~로 시작하는(startswith), ~로 끝나는(endswith)
+        a='123.ppt'
+        b='456.excel'
+        c='789.word'
+        ##
+        a.startswith('4')
+        False
+        ##
+        work=[a,b,c]
+        study=[i for i in work if i.startswith('123')]
+        study
+        ['123.ppt']
+        ##
+        ##
+        non_study=[b for b in work if b.endswith('word')]
+        non_study
+        ['789.work']
         
+        #마.바꾸기(replace)
+        # 변수 지정 없는 replace는 함수 적용 후 바로 이전 상태로 회귀, 변형된 상태가 계속되기 원하면 변수 지정 필수
+        a='123.ppt'
+        b='456.excel'
+        c='789.word'
+        ##
+        a.replace('ppt', 'PPT')
+        '123.PPT'
+        print(a)
+        '123.ppt'
+        a_=a.replace('ppt', 'PPT')
+        print(a_)
+        '123.PPT'
+
+        #바.공백 제거(strip)
+        #문자열이 갖고 있는 공백을 제거, strip 함수는 괄호 안에 어느 공백으로 둔다
+        a='   123.ppt'
+        a.strip()
+        '123.ppt'
+    
+    <9.모듈>
+        #가.모듈/패키지
+        #함수를 만들어 놓은 모듈, 모듈을 모아놓은 것은 패키지라함
+        #많이 쓰는 패키지는 numpy(과학 계산) / pandas(데이터 분석) / matplotlib (시각화) / seaborn (시각화)
+
+        #나.패키지 불러오기
+        #import pandas 판다스 패키지 불러오기
+        #from pandas import Dataframe 판다스 안에 있는 데이터 프레임 모듈 불러오기
+
+        #다.패키지 별칭 붙이기
+        #import pandas as pd
+        pd.Dataframe()
+        numpy=np
+        pandas=pd
+        matplotlib=_plt
+        seaborn=sns
+
+
+
