@@ -10,7 +10,7 @@
         1/2/3/4
         5/6/7/8
         9/10/11/12
-        numpy.array([1,2,3,4],[5,6,7,8],[9,10,11,12])
+        numpy.array([[1,2,3,4],[5,6,7,8],[9,10,11,12]])
 
         #나. ndarray = n dimension array = n차원 배열
         #shape = 배열의 차원을 표시
@@ -59,3 +59,80 @@
         arr_str[0] + arr_str[1]
         121.3
         #int와 str이 함꼐 있는 list의 경우 str으로 통일
+    
+    <3.index>
+        #가.슬라이스
+        #배열 내 원하는 위치 값을 지정하여 색인
+        arr1=np.array([[1,2,3],[4,5,6],[7,8,9]])
+        arr1[0]
+        array[1,2,3]
+        arr1[0,0]
+        array([1])
+        arr1[2,1]
+        array([5])
+        #배열 내 범위를 지정해서 색인 가능
+        #(n번째 이상:n번째 미만)
+        arr1=np.array([[1,2,3],[4,5,6],[7,8,9]])
+        arr1[:,2] #행은 0이상 열은 2
+        array([3],[6],[9])
+        arr1[1,:2] #행은 1, 열은 2 미만
+        array([4,5])
+        arr1[:2,1:] #행 2미만, 열 1 이상
+        array([2,3],[5,6])
+        arr1[-2:,:-1] #행 -2 이상, 열 -1 미만
+        array([4,5],[7,8])
+        arr[0,:] #특정 행을 모두 가져오고 싶을 때 
+        array([1,2,3])
+        arr[:,2] #특정 열을 모두 가져오고 싶을 때 
+        array([3,6,9])
+        
+        #나.fancy index
+        #배열 내 특정 범위(구간)의 값이 아닌, 원하는 위치의 값 인덱스
+        #fancy는 1차원에서는 변수 지정 인덱스하는게 가능하지만 2차원에서도 가능한데 먼가 어려움 
+        arr1=np.array(1,2,3,4,5,6,7,8,9)
+        idx=[1,4,8]
+        arr1[idx]
+        array([2,5,9])
+        arr1=np.array([[1,2,3],[4,5,6],[7,8,9]])
+        idx=[2],[0,2] #행은 2, 열은 0, 2번째를 인덱스
+        arr1[idx]
+        array([7,9])
+        arr1[:,[0,2]] #행은 전체, 열은 0, 2번째를 인덱스
+        array([[1,4,5],[3,6,9])
+
+        #다.참 거짓 인덱스 boolean
+        #블론 함수는 참 거짓을 바로 넣는 것 보단, 조건에 맞는 수를 true로 보고 인덱스하는 방식으로 사용
+        arr = np.array([1, 2, 3, 4, 5, 6, 7])
+        myTrueFalse = [True, False, True, True, True, True, True]
+        arr[mytrueFalse]
+        array([1, 3, 4, 5, 6, 7])
+        ## 2차 배열은
+        arr2d = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+        arr2d>2 #arr2d가 2보다 크다고 조건을 주면 아래와 같이 계산
+        array([[False, False,  True,  True],[ True,  True,  True,  True],[ True,  True,  True,  True]])
+        # 그래서
+        arr2d = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+        arr2d[arr2d>2]
+        array([3,4,5,6,7,8,9,10,11,12]) #2차원 이상이지만 조건 색인하면 1차원으로 추출
+
+    <4. arange, range>
+        #arange는 np의 모듈, range는 파이썬 함수
+        #가.arange는 array를 손쉽게 만들 때 사용 가능
+        #arange는 (start,stop,step) 으로 배열 생성 가능
+        arr1=np.arange(1,6,2)
+        array([1,3,5])
+        #start, stop, step 인자를 지정하면 순서와 관계없이 지정 가능
+        arr1=np.arange(stop=6,step=2,start=1)
+        array([1,3,5])
+
+        #나.range는 범위를 지정해 주는 함수
+        #range는 for문과 주로 함께 사용
+        for i in range(1,4):
+            if i%2==0:
+                continue
+            print(i)
+        1
+        3
+
+
+
