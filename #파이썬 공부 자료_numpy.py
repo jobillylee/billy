@@ -1,5 +1,7 @@
 #파이썬 공부 자료_numpy(21.12.27)
 
+import numpy as np
+
 <numpy>
     <01.array>
         #가.array 뜻
