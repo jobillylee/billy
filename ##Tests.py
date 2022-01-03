@@ -1,6 +1,6 @@
-#Tests_pandas
+#Tests_panda
 import pandas as pd
-company1 = [['삼성', 2000, '스마트폰'],['현대', 1000, '자동차'],['네이버', 500, '포털']]
-excel=pd.DataFrame(company1)
-excel.columns=['기업','매출액','주력상품']
-print(excel)
+df=pd.read_csv('http://bit.ly/ds-korean-idol')
+new_columns=['name','group','소속사', '성별', '생년월일', '키', '혈액형', '브랜드평판지수']
+df.columns=new_columns
+print(df.sort_index())
