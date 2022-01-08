@@ -135,6 +135,7 @@ import pandas as pd
         50%    177.000000  4.668615e+06
         75%    179.200000  7.862    214e+06
         max    183.000000  1.052326e+07 #전체
+        #describe은 산술 계산을 할 수 있는 컬럼만 출력
 
         #마.데이터 형태 shape
         print(df.shape)
@@ -149,7 +150,11 @@ import pandas as pd
         #sort는 기본적으로 오름차순 정렬, sort에는 index , value 2가지가 있다
         print(df.sort_index()) #내림차순 정렬 시 ascending=False로 입역
         print(df.sort_value(by='키')) #특정 컬럼 기준으로 정렬
+        print(df.sort_value(by='키', ascending=False)) # 내림차순 정열
         df.sort_values(by=['키', '브랜드평판지수']) #두가지 이상 컬럼 기준 정렬 시
+
+    <Dataframe road>
+    
 
 
 
