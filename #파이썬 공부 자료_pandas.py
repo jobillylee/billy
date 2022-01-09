@@ -153,8 +153,135 @@ import pandas as pd
         print(df.sort_value(by='키', ascending=False)) # 내림차순 정열
         df.sort_values(by=['키', '브랜드평판지수']) #두가지 이상 컬럼 기준 정렬 시
 
-    <Dataframe road>
-    
+    <Selection>
+        #가.컬럼 선택
+        #df[''],df[""],df.컬럼
+        import pandas as pd
+        df=pd.read_csv('http://bit.ly/ds-korean-idol')
+        df['키']
+        df["키"]
+        df.키
+
+        #나. 행과 열의 구간(범위) 선택하기
+        #loc 함수는 칼럼과 인덱스를 직접 선택하여 selection 하는 방식으로 
+        #구간을 구할 때 numpy의 index 방식을 따르지 않는다
+        #기준 값이 숫자일 때
+        df.loc[3:8,['이름','성별']] #[행,컬럼]
+           이름  성별
+        3   뷔  남자
+        4  화사  여자
+        5  정국  남자
+        6  민현  남자
+        7  소연  여자
+        8   진  남자
+
+        #인덱스의 값(행 기준 값)이 문자일 때
+        #행과 열 모두 구간별 및 이름별로 selection 할 수 있으며, 반드시
+        #출력 값의 순서대로 입력하여 추출해야 한다
+        df.index=df['이름']
+        df1=df.loc['화사':'진',['그룹','소속사']]
+        print(df1)
+            그룹   소속사
+        이름             
+        화사    마마무   RBW
+        정국  방탄소년단   빅히트
+        민현   뉴이스트  플레디스
+        소연    아이들    큐브
+        진   방탄소년단   빅히트
+
+        #컬럼 영역을 구간으로 구하고 싶을 경우 []을 빼고 작성한다
+        df.index=df['이름']
+        df1=df.loc['화사':'진','그룹':'소속사']
+        print(df1)  
+            그룹   소속사
+        이름             
+        화사    마마무   RBW
+        정국  방탄소년단   빅히트
+        민현   뉴이스트  플레디스
+        소연    아이들    큐브
+        진   방탄소년단   빅히트      
+
+        #다.행과 열 구간(범위) 선택하기
+        #iloc은 numpy index 형식으로 dataframe 중 데이터를 추출할 때 쓴다
+        print(df.iloc[1:3,0:3])
+             이름   그룹  소속사
+        1  지드래곤   빅뱅   YG
+        2  강다니엘  NaN  커넥트
+
+        #조건을 활용한 색인 (Boolean indexing)
+        print(df['키']>180) #df dataframe에서 키가 180보다 큰 사람을 True, 작으면 False로 
+        0     False
+        1     False
+        2     False
+        3     False
+        4     False
+        5     False
+        6      True
+        7     False
+        8     False
+        9     False
+        10    False
+        11     True
+        12    False
+        13    False
+        14    False
+        Name: 키, dtype: bool
+        #dataframe에서 조건에 맞는 데이터를 컬럼 지정하여 추출
+        print(df[df['키']>180]['이름']) #조건에 맞는 사람의 데이터를 추출하되, 이름 컬럼만 추출
+        6      민현
+        11    차은우
+        print(df.loc[df['키']>180,'이름']) #위 로직과 동일 loc함수 사용
+
+        #라.원하는 데이터가 list로 있을 때 색인 하는 방법
+        my_needs=['SM','빅히트']
+        print(df.isin(my_needs)) #전체 데이터 프레임에서 list 색인
+               이름     그룹    소속사     성별   생년월일      키    혈액형  브랜드평판지수
+        0   False  False   True  False  False  False  False    False
+        1   False  False  False  False  False  False  False    False
+        2   False  False  False  False  False  False  False    False
+        3   False  False   True  False  False  False  False    False
+        4   False  False  False  False  False  False  False    False
+        5   False  False   True  False  False  False  False    False
+        6   False  False  False  False  False  False  False    False
+        7   False  False  False  False  False  False  False    False
+        8   False  False   True  False  False  False  False    False
+        9   False  False  False  False  False  False  False    False
+        10  False  False   True  False  False  False  False    False
+        11  False  False  False  False  False  False  False    False
+        12  False  False  False  False  False  False  False    False
+        13  False  False  False  False  False  False  False    False
+        14  False  False   True  False  False  False  False    False
+        
+        print(df['소속사'].isin(my_needs)) #소속사 컬럼 데이터에서 my_needs list 색인
+        0      True
+        1     False
+        2     False
+        3      True
+        4     False
+        5      True
+        6     False
+        7     False
+        8      True
+        9     False
+        10     True
+        11    False
+        12    False
+        13    False
+        14     True
+        Name: 소속사, dtype: bool
+        
+        #list 조건에 맞는 값을 색인한 값을 추출하는데, 이름 컬럼만
+        print(df.loc[df['소속사'].isin(my_needs),'이름']) 
+        0     지민
+        3      뷔
+        5     정국
+        8      진
+        10    태연
+        14    슈가
+        Name: 이름, dtype: object
+        
+
+
 
 
 
