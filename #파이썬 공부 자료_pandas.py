@@ -105,7 +105,7 @@ import pandas as pd
         #RangeIndex(start=0, stop=15, step=1)
 
         #다.기존적인 행의 정보 출력 info()
-        print(df.info())
+        print(df.info()) #인포는 안에 괄호 필수
         RangeIndex: 15 entries, 0 to 14
         Data columns (total 8 columns):
          #   Column   Non-Null Count  Dtype  
@@ -164,7 +164,7 @@ import pandas as pd
 
         #나. 행과 열의 구간(범위) 선택하기
         #loc 함수는 칼럼과 인덱스를 직접 선택하여 selection 하는 방식으로 
-        #구간을 구할 때 numpy의 index 방식을 따르지 않는다
+        #구간을 구할 때 numpy의 이상:미만 index 방식을 따르지 않는다
         #기준 값이 숫자일 때
         df.loc[3:8,['이름','성별']] #[행,컬럼]
            이름  성별
@@ -208,7 +208,7 @@ import pandas as pd
         1  지드래곤   빅뱅   YG
         2  강다니엘  NaN  커넥트
 
-        #조건을 활용한 색인 (Boolean indexing)
+        #라.조건을 활용한 색인 (Boolean indexing)
         print(df['키']>180) #df dataframe에서 키가 180보다 큰 사람을 True, 작으면 False로 
         0     False
         1     False
@@ -279,7 +279,67 @@ import pandas as pd
         10    태연
         14    슈가
         Name: 이름, dtype: object
-        
+
+        #마.결측값 Nan 출력
+        #결측값을 출력할 때 쓰는 함수는 isna(), isnull(), 결측이 아닌 값은 notnull(), notna()를 사용하여 색인
+        print(df.isna()) #Nan이 있어? 질문
+        #        이름     그룹    소속사     성별   생년월일      키    혈액형  브랜드평판지수
+        0   False  False  False  False  False  False  False    False
+        1   False  False  False  False  False  False  False    False
+        2   False   True  False  False  False  False  False    False
+        3   False  False  False  False  False  False  False    False
+        4   False  False  False  False  False  False  False    False
+        5   False  False  False  False  False  False  False    False
+        6   False  False  False  False  False  False  False    False
+        7   False  False  False  False  False   True  False    False
+        8   False  False  False  False  False  False  False    False
+        9   False  False  False  False  False  False  False    False
+        10  False  False  False  False  False   True  False    False
+        11  False  False  False  False  False  False  False    False
+        12  False  False  False  False  False  False  False    False
+        13  False  False  False  False  False  False  False    False
+        14  False  False  False  False  False  False  False    False
+
+        #결측값을 찾고 색인하는 방법
+        print(df['그룹'][df['그룹'].isnull()]) #그룹 컬럼을 색인할껀데, 그 구룹 값이 null은 값이야
+        2    NaN
+        Name: 그룹, dtype: object
+        print(df[df['그룹'].isnull()]['이름']) #그룹 컬럼 값이 null인 값을 색인할 껀데, 색인 시 조건을 만족하는 이름 컬럼을 축력
+        2    강다니엘
+        Name: 이름, dtype: object
+        print(df.loc[df['그룹'].isnull(),['이름']])
+        2    강다니엘
+        Name: 이름, dtype: object
+    
+    <복사>
+        #기존에 갖고 잇는 데이터프레임을 새로운 변수에 대입하여 넣었을 때, 기존과 신규는 원본 사본의 개념이 아닌, 
+        #서로 연결된 두 데이터가 된다.
+        import pandas as pd
+        df=pd.read_csv('http://bit.ly/ds-korean-idol')
+        new_df=df
+        new_df['이름']=0
+        #new_df와 df 모두 '이름' 컬럼의 값이 0으로 변경된다. 
+
+        #연결되지 않은 서로 다른 데이터프레임을 만들기 위해서는 copy() 메소드를 사용한다
+        new_df=df.copy()
+
+    <Row, column 추가 삭제>
+        #가.행추가, 
+        #컬럼을 지정하고, 데이터를 지정해야 한다, 그리고 append 함수를 넣는다 해도, 꼭 df= 적용될 수 있도록 해야한다 
+        #keyword, value를 함께 지정하는 dict 형태로 데이터를 입력해야 한다. 
+        df=df.append({'이름': '테디', '그룹': '테디그룹', '소속사': '끝내주는소속사', '성별': '남자', '생년월일': '1970-01-01', '키': 195.0, '혈액형': 'O', '브랜드평판지수': 12345678}, ignore_index=True)
+        #작성 시 ignore_index=True 표현은 꼭 들어가야 함
+
+        #나.열추가
+        df['국가']='대한민국' #국가라는 새로운 컬럼과 데이터 지정
+        df.loc[df['이름']=='지드래곤','국적']='korea'
+        print(df.head())
+             이름     그룹  소속사  성별        생년월일      키 혈액형   브랜드평판지수     국적
+        0    지민  방탄소년단  빅히트  남자  1995-10-13  173.6   A  10523260    NaN
+        1  지드래곤     빅뱅   YG  남자  1988-08-18  177.0   A   9916947  korea
+        2  강다니엘    NaN  커넥트  남자  1996-12-10  180.0   A   8273745    NaN
+        3     뷔  방탄소년단  빅히트  남자  1995-12-30  178.0  AB   8073501    NaN
+        4    화사    마마무  RBW  여자  1995-07-23  162.1   A   7650928    NaN
 
 
 
