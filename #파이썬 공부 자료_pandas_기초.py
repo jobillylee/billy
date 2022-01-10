@@ -153,7 +153,7 @@ import pandas as pd
         print(df.sort_value(by='키', ascending=False)) # 내림차순 정열
         df.sort_values(by=['키', '브랜드평판지수']) #두가지 이상 컬럼 기준 정렬 시
 
-    <Selection>
+    <4.Selection>
         #가.컬럼 선택
         #df[''],df[""],df.컬럼
         import pandas as pd
@@ -280,7 +280,8 @@ import pandas as pd
         14    슈가
         Name: 이름, dtype: object
 
-        #마.결측값 Nan 출력
+    <5.결측값 출력>
+        #가.결측값 Nan 출력
         #결측값을 출력할 때 쓰는 함수는 isna(), isnull(), 결측이 아닌 값은 notnull(), notna()를 사용하여 색인
         print(df.isna()) #Nan이 있어? 질문
         #        이름     그룹    소속사     성별   생년월일      키    혈액형  브랜드평판지수
@@ -300,7 +301,7 @@ import pandas as pd
         13  False  False  False  False  False  False  False    False
         14  False  False  False  False  False  False  False    False
 
-        #결측값을 찾고 색인하는 방법
+        #나.결측값을 찾고 색인하는 방법
         print(df['그룹'][df['그룹'].isnull()]) #그룹 컬럼을 색인할껀데, 그 구룹 값이 null은 값이야
         2    NaN
         Name: 그룹, dtype: object
@@ -311,7 +312,7 @@ import pandas as pd
         2    강다니엘
         Name: 이름, dtype: object
     
-    <복사>
+    <6.복사>
         #기존에 갖고 잇는 데이터프레임을 새로운 변수에 대입하여 넣었을 때, 기존과 신규는 원본 사본의 개념이 아닌, 
         #서로 연결된 두 데이터가 된다.
         import pandas as pd
@@ -323,7 +324,7 @@ import pandas as pd
         #연결되지 않은 서로 다른 데이터프레임을 만들기 위해서는 copy() 메소드를 사용한다
         new_df=df.copy()
 
-    <Row, column 추가 삭제>
+    <7.Row, column 추가 삭제>
         #가.행추가, 
         #컬럼을 지정하고, 데이터를 지정해야 한다, 그리고 append 함수를 넣는다 해도, 꼭 df= 적용될 수 있도록 해야한다 
         #keyword, value를 함께 지정하는 dict 형태로 데이터를 입력해야 한다. 
@@ -341,7 +342,7 @@ import pandas as pd
         3     뷔  방탄소년단  빅히트  남자  1995-12-30  178.0  AB   8073501    NaN
         4    화사    마마무  RBW  여자  1995-07-23  162.1   A   7650928    NaN
 
-    <통계값 다루기>
+    <8.통계값 다루기>
         #가.통계함수 통계값을 구할 때는 df['키'].함수()를 넣는 방식으로 진행된다
         df['컬럼'].max() #최대값
         df['컬럼'].min() #최소값
