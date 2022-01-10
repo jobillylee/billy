@@ -341,6 +341,146 @@ import pandas as pd
         3     뷔  방탄소년단  빅히트  남자  1995-12-30  178.0  AB   8073501    NaN
         4    화사    마마무  RBW  여자  1995-07-23  162.1   A   7650928    NaN
 
+    <통계값 다루기>
+        #가.통계함수 통계값을 구할 때는 df['키'].함수()를 넣는 방식으로 진행된다
+        df['컬럼'].max() #최대값
+        df['컬럼'].min() #최소값
+        df['컬럼'].sum() #숫자의 합
+        df['컬럼'].count() #갯수의 합
+        df['컬럼'].mean() #평균
+        df['컬럼'].var() #분산
+        df['컬럼'].std() #표준편차
+        df['컬럼'].median #중앙값 (가장 가운데 있는 값)
+        df['컬럼'].mode #가장 자주나오는 값
+
+        #나.피벗 테이블
+        #엑셀의 피벗과 같은 개념, 행과 열 인덱스를 지정하고 원하는 값을 지정하는 방식
+        #컬럼을 지정하지 않고 분석 가능, 인덱스와 value를 컬럼으로 받아 분석
+        df=pd.read_csv('http://bit.ly/ds-korean-idol')  
+        df_pvt=pd.pivot_table(df, index='소속사', columns='혈액형', values='키')
+        print(df_pvt)
+        혈액형          A     AB      B       O
+        소속사                                 
+        RBW      162.1    NaN    NaN     NaN
+        YG       177.0    NaN    NaN     NaN
+        빅히트      175.8  178.0    NaN  176.60
+        스타크루이엔티  167.1    NaN    NaN     NaN
+        커넥트      180.0    NaN    NaN     NaN
+        판타지오       NaN    NaN  183.0     NaN
+        플레디스       NaN  175.0    NaN  179.15
+
+        #기본적으로 value 값은 평균으로 출력된다. 만약 값의 출력형태를 바꾸고 싶다면 aggfunc를 지정하면 된다.
+        df_pvt2=pd.pivot_table(df,index='소속사', columns='혈액형', values='키',aggfunc=np.sum)
+        혈액형          A     AB      B      O
+        소속사                                
+        RBW      162.1    NaN    NaN    NaN
+        SM         0.0    NaN    NaN    NaN
+        YG       177.0    NaN    NaN    NaN
+        빅히트      351.6  178.0    NaN  353.2
+        스타크루이엔티  167.1    NaN    NaN    NaN
+        커넥트      180.0    NaN    NaN    NaN
+        큐브         NaN    NaN    0.0    NaN
+        판타지오       NaN    NaN  183.0    NaN
+
+        #다.그룹별 데이터 분석 (groupby)
+        #그룹별로 데이터를 묶어서 분석할 때 사용
+        df_gv=df.groupby('소속사')['키'].mean() #소속사 그룹을 만들고 평균값을 출력하는데, 키 컬럼 값만 출력
+        print(df_gv)
+        소속사
+        RBW        162.100000
+        SM                NaN
+        YG         177.000000
+        빅히트        176.560000
+        스타크루이엔티    167.100000
+        커넥트        180.000000
+        큐브                NaN
+        판타지오       183.000000
+        플레디스       177.766667
+        Name: 키, dtype: float64
+        #groupby 뒤에 size(), count(), sum(), mean(), median(), min(), max(), mode(), std(), var() 등 
+        #메소드를 넣을 수 있다. 
+        #두개 이상의 컬럼 값을 출력하고 싶으면 다음과 같이 작성
+        df_gv=df.groupby('소속사')['키','브랜드평판지수'].mean()
+        print(df_gv)
+                키       브랜드평판지수
+        소속사                              
+        RBW      162.100000  7.650928e+06
+        SM              NaN  3.918661e+06
+        YG       177.000000  9.916947e+06
+        빅히트      176.560000  6.260169e+06
+        스타크루이엔티  167.100000  4.036489e+06
+        커넥트      180.000000  8.273745e+06
+        큐브              NaN  4.668615e+06
+        판타지오     183.000000  3.506027e+06
+        플레디스     177.766667  3.855194e+06
+    
+        #라.멀티 인덱스 만들기
+        df_gv=df.groupby(['소속사','이름'])['키'].sum()
+        print(df_gv)
+        소속사      이름  
+        RBW      화사      162.1
+        SM       태연        0.0
+        YG       지드래곤    177.0
+        빅히트      뷔       178.0
+                 슈가      174.0
+                 정국      178.0
+                 지민      173.6
+                 진       179.2
+        스타크루이엔티  하성운     167.1
+        커넥트      강다니엘    180.0
+        큐브       소연        0.0
+        판타지오     차은우     183.0
+        플레디스     JR      176.0
+                 민현      182.3
+                백호      175.0
+        Name: 키, dtype: float64
+        #멀티 인텍스 그룹중 하나를 컬럼으로 옮기고 싶을 때 unstack()
+        df_gv=df.groupby(['소속사','이름'])['키'].sum()
+        df_gv2=df_gv.unstack('소속사')
+        print(df_gv2)
+            소속사     RBW   SM     YG    빅히트  스타크루이엔티    커넥트   큐브   판타지오   플레디스
+        이름                                                               
+        JR      NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  176.0
+        강다니엘    NaN  NaN    NaN    NaN      NaN  180.0  NaN    NaN    NaN
+        민현      NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  182.3
+        백호      NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  175.0
+        뷔       NaN  NaN    NaN  178.0      NaN    NaN  NaN    NaN    NaN
+        소연      NaN  NaN    NaN    NaN      NaN    NaN  0.0    NaN    NaN
+        슈가      NaN  NaN    NaN  174.0      NaN    NaN  NaN    NaN    NaN
+        정국      NaN  NaN    NaN  178.0      NaN    NaN  NaN    NaN    NaN
+        지드래곤    NaN  NaN  177.0    NaN      NaN    NaN  NaN    NaN    NaN
+        지민      NaN  NaN    NaN  173.6      NaN    NaN  NaN    NaN    NaN
+        진       NaN  NaN    NaN  179.2      NaN    NaN  NaN    NaN    NaN
+        차은우     NaN  NaN    NaN    NaN      NaN    NaN  NaN  183.0    NaN
+        태연      NaN  0.0    NaN    NaN      NaN    NaN  NaN    NaN    NaN
+        하성운     NaN  NaN    NaN    NaN    167.1    NaN  NaN    NaN    NaN
+        화사    162.1  NaN    NaN    NaN      NaN    NaN  NaN    NaN    NaN
+
+        #멀티인덱스의 인덱스를 리셋, 다시 인텍스를 0,1,2,~로 만드려면 reset_index()
+        df=pd.read_csv('http://bit.ly/ds-korean-idol')  
+        df_gv=df.groupby(['소속사','이름'])['키'].sum()
+        df_gv2=df_gv.unstack('소속사')
+        df_reset=df_gv2.reset_index()
+        print(df_reset)
+        소속사    이름    RBW   SM     YG    빅히트  스타크루이엔티    커넥트   큐브   판타지오   플레디스
+        0      JR    NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  176.0
+        1    강다니엘    NaN  NaN    NaN    NaN      NaN  180.0  NaN    NaN    NaN
+        2      민현    NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  182.3
+        3      백호    NaN  NaN    NaN    NaN      NaN    NaN  NaN    NaN  175.0
+        4       뷔    NaN  NaN    NaN  178.0      NaN    NaN  NaN    NaN    NaN
+        5      소연    NaN  NaN    NaN    NaN      NaN    NaN  0.0    NaN    NaN
+        6      슈가    NaN  NaN    NaN  174.0      NaN    NaN  NaN    NaN    NaN
+        7      정국    NaN  NaN    NaN  178.0      NaN    NaN  NaN    NaN    NaN
+        8    지드래곤    NaN  NaN  177.0    NaN      NaN    NaN  NaN    NaN    NaN
+        9      지민    NaN  NaN    NaN  173.6      NaN    NaN  NaN    NaN    NaN
+        10      진    NaN  NaN    NaN  179.2      NaN    NaN  NaN    NaN    NaN
+        11    차은우    NaN  NaN    NaN    NaN      NaN    NaN  NaN  183.0    NaN
+        12     태연    NaN  0.0    NaN    NaN      NaN    NaN  NaN    NaN    NaN
+        13    하성운    NaN  NaN    NaN    NaN    167.1    NaN  NaN    NaN    NaN
+        14     화사  162.1  NaN    NaN    NaN      NaN    NaN  NaN    NaN    NaN
+
+
+
 
 
 
