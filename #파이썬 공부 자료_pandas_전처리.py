@@ -3,90 +3,90 @@
 import pandas as pd
 <전처리>
     <01.결측값 채워주는 fillna>
-        #가.fillna() 메소드 활용 데이터프레임 내 nan 값 색인 및 대체
-        df = pd.read_csv('https://bit.ly/ds-korean-idol')
-        df_copy_fillna=df.copy()
-        df_copy_fillna=df['키'].fillna('-1') #df'키'컬럼에서 결측값을 색인하고 Nan값을 -1로 대체하고 df_fillna 변수에 저장
-        print(df_fillna)
+          #가.fillna() 메소드 활용 데이터프레임 내 nan 값 색인 및 대체
+          df = pd.read_csv('https://bit.ly/ds-korean-idol')
+          df_copy_fillna=df.copy()
+          df_copy_fillna=df['키'].fillna('-1') #df'키'컬럼에서 결측값을 색인하고 Nan값을 -1로 대체하고 df_fillna 변수에 저장
+          print(df_fillna)
         
-        #나.별도의 변수를 지정하지 않을 때 
-        df_copy=df.copy()
-        df_copy['키'].fillna('-1',inplace=True) #inplace=True 대입한 값을 실제 데이터 프레임에도 적용
-        print(df_copy['키'])
+          #나.별도의 변수를 지정하지 않을 때 
+          df_copy=df.copy()
+          df_copy['키'].fillna('-1',inplace=True) #inplace=True 대입한 값을 실제 데이터 프레임에도 적용
+          print(df_copy['키'])
         
-        #다.nan값을 지정해 줄 때 특정 메소드가 적용된 값을 넣고 싶을 때는
-        df = pd.read_csv('https://bit.ly/ds-korean-idol')
-        df_copy=df.copy() #데이터 프레임을 복사
-        height=df_copy['키'].mean() #height 변수에 df_copy ['키'] 컬럼의 평균값 저장
-        df_copy_fillna=df_copy['키'].fillna(height) #height에 정의한 함수를 df_copy['키'] 컬럼 대입, 그걸 변수에 대입 
-        print(df_copy_fillna)
+          #다.nan값을 지정해 줄 때 특정 메소드가 적용된 값을 넣고 싶을 때는
+          df = pd.read_csv('https://bit.ly/ds-korean-idol')
+          df_copy=df.copy() #데이터 프레임을 복사
+          height=df_copy['키'].mean() #height 변수에 df_copy ['키'] 컬럼의 평균값 저장
+          df_copy_fillna=df_copy['키'].fillna(height) #height에 정의한 함수를 df_copy['키'] 컬럼 대입, 그걸 변수에 대입 
+          print(df_copy_fillna)
     
-    <02.결측값 제거하는 dropna>
-        #가.결측값이 있는 행/열을 삭제할 때 df.dropna()
-        df = pd.read_csv('https://bit.ly/ds-korean-idol')
-        df2=df.copy()
-        print(df2.dropna(axis=1)) #dropna()로 작성하는 경우 행 삭제, axis=1 지정 시 nan 포함된 열 삭제
+     <02.결측값 제거하는 dropna>
+          #가.결측값이 있는 행/열을 삭제할 때 df.dropna()
+          df = pd.read_csv('https://bit.ly/ds-korean-idol')
+          df2=df.copy()
+          print(df2.dropna(axis=1)) #dropna()로 작성하는 경우 행 삭제, axis=1 지정 시 nan 포함된 열 삭제
 
-        #나.조건부 삭제(any / all)
-        #하나라도 nan가 포함되어 있을 때 삭제는 how=any, 모두 nan 일 때 삭제 how=all 사용
-        print(df2.dropna(axis=0,how=any))
+          #나.조건부 삭제(any / all)
+          #하나라도 nan가 포함되어 있을 때 삭제는 how=any, 모두 nan 일 때 삭제 how=all 사용
+          print(df2.dropna(axis=0,how=any))
 
-    <03.중복값을 제거하는 drop_duplicates)
-        #데이터프레임 전체/특정 컬럼 내 중복 값 제거
-        #drop_duplicates()는 중복값이 존재할 시 상위 index를 남겨 놓고 하위 index는 삭제
+     <03.중복값을 제거하는 drop_duplicates)
+          #데이터프레임 전체/특정 컬럼 내 중복 값 제거
+          #drop_duplicates()는 중복값이 존재할 시 상위 index를 남겨 놓고 하위 index는 삭제
         
-        #가.중복값이 존재하는 행 전체를 삭제하는 방법 
-        df = pd.read_csv('https://bit.ly/ds-korean-idol')
-        df2=df.copy()
-        df2_dup=df2.drop_duplicates('그룹') #df2 데이터 프레임 중 그룹이 중복인 행은 삭제
-        print(df2_dup)
-              이름     그룹      소속사  성별        생년월일      키 혈액형   브랜드평판지수
-        0     지민  방탄소년단      빅히트  남자  1995-10-13  173.6   A  10523260
-        1   지드래곤     빅뱅       YG  남자  1988-08-18  177.0   A   9916947
-        2   강다니엘    NaN      커넥트  남자  1996-12-10  180.0   A   8273745
-        4     화사    마마무      RBW  여자  1995-07-23  162.1   A   7650928
-        6     민현   뉴이스트     플레디스  남자  1995-08-09  182.3   O   4989792
-        7     소연    아이들       큐브  여자  1998-08-26    NaN   B   4668615
-        9    하성운     핫샷  스타크루이엔티  남자  1994-03-22  167.1   A   4036489
-        10    태연   소녀시대       SM  여자  1989-03-09    NaN   A   3918661
-        11   차은우   아스트로     판타지오  남자  1997-03-30  183.0   B   3506027
+          #가.중복값이 존재하는 행 전체를 삭제하는 방법 
+          df = pd.read_csv('https://bit.ly/ds-korean-idol')
+          df2=df.copy()
+          df2_dup=df2.drop_duplicates('그룹') #df2 데이터 프레임 중 그룹이 중복인 행은 삭제
+          print(df2_dup)
+                이름     그룹      소속사  성별        생년월일      키 혈액형   브랜드평판지수
+          0     지민  방탄소년단      빅히트  남자  1995-10-13  173.6   A  10523260
+          1   지드래곤     빅뱅       YG  남자  1988-08-18  177.0   A   9916947
+          2   강다니엘    NaN      커넥트  남자  1996-12-10  180.0   A   8273745
+          4     화사    마마무      RBW  여자  1995-07-23  162.1   A   7650928
+          6     민현   뉴이스트     플레디스  남자  1995-08-09  182.3   O   4989792
+          7     소연    아이들       큐브  여자  1998-08-26    NaN   B   4668615
+          9    하성운     핫샷  스타크루이엔티  남자  1994-03-22  167.1   A   4036489
+          10    태연   소녀시대       SM  여자  1989-03-09    NaN   A   3918661
+          11   차은우   아스트로     판타지오  남자  1997-03-30  183.0   B   3506027
 
         
-        #나.특정 컬럼의 중복 값을 삭제하는 방법  
-        df = pd.read_csv('https://bit.ly/ds-korean-idol')
-        df2=df.copy()
-        df2_dup=df2['키'].drop_duplicates()
-        print(df2_dup)
-        0     173.6
-        1     177.0
-        2     180.0
-        3     178.0
-        4     162.1
-        6     182.3
-        7       NaN
-        8     179.2
-        9     167.1
-        11    183.0
-        12    175.0
-        13    176.0
-        14    174.0
+          #나.특정 컬럼의 중복 값을 삭제하는 방법  
+          df = pd.read_csv('https://bit.ly/ds-korean-idol')
+          df2=df.copy()
+          df2_dup=df2['키'].drop_duplicates()
+          print(df2_dup)
+          0     173.6
+          1     177.0
+          2     180.0
+          3     178.0
+          4     162.1
+          6     182.3
+          7       NaN
+          8     179.2
+          9     167.1
+          11    183.0
+          12    175.0
+          13    176.0
+          14    174.0
        
-        #만약 하위 인덱스를 남겨놓고 상위 인덱스를 삭제하고 싶다면
-        df2_dup=df2['키'].drop_duplicates(keep='last')
-        0     173.6
-        1     177.0
-        2     180.0
-        4     162.1
-        5     178.0
-        6     182.3
-        8     179.2
-        9     167.1
-        10      NaN
-        11    183.0
-        12    175.0
-        13    176.0
-        14    174.0
-        Name: 키, dtype: float64
+          #만약 하위 인덱스를 남겨놓고 상위 인덱스를 삭제하고 싶다면
+          df2_dup=df2['키'].drop_duplicates(keep='last')
+          0     173.6
+          1     177.0
+          2     180.0
+          4     162.1
+          5     178.0
+          6     182.3
+          8     179.2
+          9     167.1
+          10      NaN
+          11    183.0
+          12    175.0
+          13    176.0
+          14    174.0
+          Name: 키, dtype: float64
 
     <4.불특정 행/열 삭제 drop>
         #행 또는 열을 삭제하고 싶을 때는 drop 함수를 사용한다
@@ -116,7 +116,7 @@ import pandas as pd
         5    정국  방탄소년단  빅히트  남자  1997-09-01  178.0   A   5208335
 
 
-        #행 인덱스가 str일 때 
+        #행 인덱스가 object일 때 
         df2.index=df2['이름']
         df2_drop=df2.drop('지드래곤',axis=0)
         print(df2_drop)
@@ -216,3 +216,95 @@ import pandas as pd
         #다.기준 컬럼의 데이터는 동일하지만, 컬럼명이 다른 경우
         pd.merge(df, df_right, left_on='이름', right_on='성함', how='outer')
         #왼쪽은 '이름', 오른쪽은 '성함'
+
+     <타입 지정>
+        #데이터프래임 분석을 위해 타입 지정을 해줄 때가 있다
+        #가. 타입 정의
+        #object:일반 문자열 타입 / float : 실수 / int : 정수 / catagory : 카테고리 / datetime
+
+        #나.타입 변환(adtype)
+        df['키'].astype(int) #컬럼 내 nan 데이터가 있을 경우 일반 숫자로 변환 후  타입 변환 가능
+        df['키']=df['키'].fillna(-1)
+
+        #다.날짜변환
+        #파이썬 메소드가 아닌, 판다스의 날짜변환 메소드를 사용하는 이유는 편리한 후처리를 위해
+        df['생년월일']=pd.to_datetime(df['생년월일'])
+        print(df['생년월일'].dtype)
+        datetime64[ns]
+
+        df['생년월일'].dt.date #YYYY-MM-DD
+        df['생년월일'].dt.day #datetime에서 일 추출
+        df['생년월일'].dt.day_name() #요일을 문자로 추출        
+        df['생년월일'].dt.month #월 추출
+        df['생년월일'].dt.month_name() #월을 문자로 추출
+        df['생년월일'].dt.year #연 추출
+        df['생년월일'].dt.hour #시간 추출
+        df['생년월일'].dt.second #초 추출
+        df['생년월일'].dt.weeekday #요일을 숫자로 추출 0 월, 1 화 ...        
+        df['생년월일'].dt.dayofweek #요일을 숫자로 추출 0월, 1화...
+        df['생년월일'].dt.weekofyear #연 기준 주차 수
+        df['생년월일'].dt.dayofyear #연 기준 일자 수
+        df['생년월일'].dt.quarter #분기
+
+     <데이터프레임 계산>    
+          #데이터프레임 값을 계산하는 방법은 크게 4가지
+          #목표 성별 남/여를 1/0으로 변환
+          #가.단순 loc 계산
+          df.loc[df['성별']=='남자', '성별'] = 1
+          df.loc[df['성별']=='여자', '성별'] = 0
+
+          #나.apply
+          #apply는 함수식을 받아 계산하는 메소드다
+          def male_or_female(x):
+              if x=='남자':
+                  return 1
+              elif x=='여자':
+                  return 0
+          df['성별_New']=df['성별'].apply(male_or_female)
+          print(df.head())
+               이름     그룹  소속사  성별        생년월일      키 혈액형   브랜드평판지수  성별_New
+          0    지민  방탄소년단  빅히트  남자  1995-10-13  173.6   A  10523260       1
+          1  지드래곤     빅뱅   YG  남자  1988-08-18  177.0   A   9916947       1
+          2  강다니엘    NaN  커넥트  남자  1996-12-10  180.0   A   8273745       1
+          3     뷔  방탄소년단  빅히트  남자  1995-12-30  178.0  AB   8073501       1
+          4    화사    마마무  RBW  여자  1995-07-23  162.1   A   7650928       0
+
+          #lambda는 1줄로 작성하는 간단한 함수식, 리턴을 명기하지 않음
+          f=lambda x: 1 if x=='남자' else 0
+          df['성별']=df['성별'].apply(f)
+          print(df.head())
+               이름     그룹  소속사  성별        생년월일      키 혈액형   브랜드평판지수
+          0    지민  방탄소년단  빅히트   1  1995-10-13  173.6   A  10523260
+          1  지드래곤     빅뱅   YG   1  1988-08-18  177.0   A   9916947
+          2  강다니엘    NaN  커넥트   1  1996-12-10  180.0   A   8273745
+          3     뷔  방탄소년단  빅히트   1  1995-12-30  178.0  AB   8073501
+          4    화사    마마무  RBW   0  1995-07-23  162.1   A   7650928
+
+          #다.맵핑(map)
+          #dict 형식으로 Key,Value를 지정해 주고 map 메소드를 이용해 대입
+          my_map={'남자':1, '여자':0}
+          df['성별']=df['성별'].map(my_map)
+          print(df.head())
+               이름     그룹  소속사  성별        생년월일      키 혈액형   브랜드평판지수
+          0    지민  방탄소년단  빅히트   1  1995-10-13  173.6   A  10523260
+          1  지드래곤     빅뱅   YG   1  1988-08-18  177.0   A   9916947
+          2  강다니엘    NaN  커넥트   1  1996-12-10  180.0   A   8273745
+          3     뷔  방탄소년단  빅히트   1  1995-12-30  178.0  AB   8073501
+          4    화사    마마무  RBW   0  1995-07-23  162.1   A   7650928     
+
+          #라.데이터프레임간 사칙연산
+          #np에서 사용하는 +,-,*,/,%를 DF간에 적용 가능하다
+          #df['미술']+-*/%df['수학']
+          #df['미술']+10
+          #df.mean(axis=0) axis=0은 행(컬럼) 기준으로 산술,axis=1은 열(인덱스) 기준으로 산출
+          #nan 값은 +-*/% 모두 nan으로 산출  
+          #주의 DF 내 문자열이 있을 경우 사칙연산 시 오류 발생
+          #행의 갯수가 다른 경우 사칙연산 시 추가 행은 nan으로 산출
+
+          #마.원하는 타입을 구분하여 추출
+          #select_dtype(include:포함/exclude:제외) 형태로 작성
+          df.select_dtypes(include='object') #문자열이 포함된 컬럼만 추출
+          df.select_dtypes(exclude='object')+10 # 응용
+
+
+
