@@ -1,7 +1,11 @@
-#파이썬 공부 자료_pandas_기초
+#파이썬 공부 자료_pandas_시각화
 
 import pandas as pd
-<pandas>
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+<그래픽 만들기>
     <01.Series,Dataframe>
         #가.series
         #series는 1차원의 값, 엑셀 데이터에서 보면 한개 열/컬럼의 값

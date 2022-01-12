@@ -305,6 +305,25 @@ import pandas as pd
           #select_dtype(include:포함/exclude:제외) 형태로 작성
           df.select_dtypes(include='object') #문자열이 포함된 컬럼만 추출
           df.select_dtypes(exclude='object')+10 # 응용
+          
+<그래픽 만들기>
+     <plot>
+          #가.plot 메소드를 이용해 그래프를 그릴 수 있다. 
+          #아직 판다스 plot을 이용해 그래프 제작 방법은 모르고 있다
+          #강의에서 나온 수식은 아래와 같다
+          df = pd.read_csv('https://bit.ly/ds-house-price-clean')
+          df['분양가'].plot(kind='line')
+          #kind는 그래프의 형태를 고르는 함수로
+          line: 선그래프
+          bar: 바 그래프
+          barh: 수평 바 그래프
+          hist: 히스토그램 #가로축 분포, 세로축 빈도
+          kde: 커널 밀도 그래프 #분포와 빈도를 나타내는 히스토그램과, 선으로 표현
+          hexbin: 고밀도 산점도 그래프 # 밀도분포를 나타내는 그래프, plot(kind='hexbin', x='분양가', y='연도', gridsize=20) x,y축 지정 필요
+          box: 박스 플롯 #튀는 값을 잡아내기 위해 최대 최소값은 추정치, 상위 25% - 상위 75% = 값, 최대값 = 상위 25% + 값 / 최소값 = 상위 75% + 값
+          area: 면적 그래프 #라인 그래프에서 라인 하단 영역을 색칠
+          pie: 파이 그래프 #원형 그래프
+          scatter: 산점도 그래프 #산점도 그래프, x축과 y축을 지정해 주어야 한다
 
 
 
