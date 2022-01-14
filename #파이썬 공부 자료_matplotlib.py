@@ -136,7 +136,7 @@ plt.rcParams["figure.figsize"] = (12, 9)
         #Box Plot(boxplot) = 상자 그래프
         
     <4.Seabron>
-        #가.scatter
+        #가.scatterplot
         #Seabron은 import 할 때는 as sns를 사용
         #sns에서 scatter 그래프는 sns.scatterplot()으로 명령어를 작성한다
         x = np.random.rand(50)
@@ -171,6 +171,90 @@ plt.rcParams["figure.figsize"] = (12, 9)
         #hue=area는 컬러 옵션, area 지정으로 동그라미 컬러 삽입
         #palette는 sns 컬러 팔렛트 사용 
         
+        #나.barplot
+        #sns에서는 bar/barh 구분이 없다. barplot에서 x,y만 바꿔서 작성하면 된다.
+        x = ['Math', 'Programming', 'Data Science', 'Art', 'English', 'Physics']
+        y = [66, 80, 60, 50, 80, 10]
+        sns.barplot(x,y,alpha=0.7,palette='YlGnBu')
+        plt.grid()
+        plt.title('연습삼아 또 해보자')
+        plt.xlabel('과목')
+        plt.show()
         
+        #그래프를 임의로 그려야 하는 경우 matplotilb, 데이터 프래임으로 그려야 하는 경우 seaborn
+        titanic = sns.load_dataset('titanic')
+        titanic.head()
+        sns.barplot(x='survived',y='age',hue='pclass',data=titanic, palette='muted')
+        plt.show()
+        #에를 들어 sns.barplot(기간,매출,hue=시즌/비시즌,)
+        
+        #다.lineplot
+        #sns.set_style('') 통해 그래프 백그라운드 컬러 및 형태를 지정할 수 있다.
+        #whitegrid(흰바탕 격자) darkgrid(회색바탕 격자), white(흰색 무지), dark(회색 무지)
+        x = np.arange(0, 10, 0.1)
+        y_1 = 1 + np.sin(x)
+        y_2 = 1 + np.cos(x)
 
+        sns.set_style('darkgrid')
+
+        sns.lineplot(x,y_1,markers="v", linestyle='-.',palette="muted",label='sin')
+        sns.lineplot(x,y_2,markers="o", linestyle='--',palette="muted",label='cos')
+
+        plt.title('sin cos 그래프')
+        plt.ylabel('value')
+
+        plt.show()
+        
+        #라.areaplot
+        #seaborn에서는 areaplot을 지원하지 않는다.
+        x = np.arange(1,21)
+        y =  np.random.randint(low=5, high=10, size=20)
+        plt.fill_between(x, y, color='g', alpha=0.5)
+        sns.lineplot(x,y,color='g')
+        plt.show()
+        
+        #마.distplot (전 histplot)
+        #seaborn에서는 hist가 아닌, distplot으로 명령어 사용
+        #메소드 사용하여 빈도(빈도수분포와 밀도 표현 가능)
+        #도수 : hist='True' / 밀도 : kde='True' / 가로 그래프 : vertical='True' / 누적분포 : cumulative='True'
+        #밀도 그래프에서 도수를 함께 표헌한 그래프(rugplot) : rug='True'
+        N = 100000
+        bins = 30
+        x = np.random.randn(N)
+        sns.distplot(x,bins=bins,kde=True,hist=True,vertical=False)
+        plt.show()
+        
+        #바.chartplot
+        #seaborn에서는 chartplot는 지원하지 않는다. 
+        #chartplot은 별도의 공부가 필요
+        
+        #사.countplot
+        #첫번째 인자의 수를 카운트 하는 그래프,y축을 별도로 지정하지 않는다. 
+        #hue 매소드를 사용해 x축를 세분화 하여 볼 수 있다. 
+        #외부 데이터를 가저오는 경우, data=데이터 변수명 을 꼭 지정해 줘야 한다
+        plt.figure(figsize=(12,6))
+        titanic = sns.load_dataset('titanic')
+
+        plt.subplot(121)
+        sns.countplot(x='sex',hue='survived',palette='copper',data=titanic)
+
+        plt.subplot(122)
+        sns.countplot(y='sex',hue='survived',palette='copper',data=titanic)
+
+        plt.show()
+        
+        #아.hitmap
+        #hitmap 데이터의 상관관계 또는 두 칼럼간 상관관계를 잘 표현
+        tips = sns.load_dataset('tips')
+
+        pivot=tips.pivot_table(index='time',columns='smoker',values='tip')
+        sns.heatmap(pivot,data=tips,cmap='Blues',annot=True)
+        plt.show()
+        #annot=True 데이터 값 표시 여부
+        
+        titanic = sns.load_dataset('titanic')
+        x=titanic.corr() #corr는 correlation의 약어 상관관계를 나타냄
+        sns.heatmap(x,annot=True,cmap='YlGnBu')
+
+        plt.show()
 
