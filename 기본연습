@@ -1,0 +1,2 @@
+x = 'Python Programming'
+print('x[4:15]=',x[4:15])
