@@ -7,15 +7,10 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import seaborn as sns
 
-#폰트셋팅
-mpl.rcParams['font.family']='Apple SD Gothic Neo'
-plt.figure(figsize=(12,6))
-
 titanic = sns.load_dataset('titanic')
-x=titanic.corr()
-sns.heatmap(x,annot=True,cmap='YlGnBu')
+tips = sns.load_dataset('tips')
+
+#폰트셋팅
+sns.lmplot(x='total_bill',y='tip',hue='smoker',col='day',col_wrap=2,height=8,data=tips)
 
 plt.show()
-
-
-

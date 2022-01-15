@@ -257,4 +257,25 @@ plt.rcParams["figure.figsize"] = (12, 9)
         sns.heatmap(x,annot=True,cmap='YlGnBu')
 
         plt.show()
+        
+        #자.pairplot 
+        #데이터 내 다양한 인자를 인식, 숫자열에 대한 분포를 다양한 그래프로 한번에 보여주는 그래프 
+        sns.pairplot(tips, hue='size',palette='rainbow',height=5)
+        plt.show()
+        
+        #차.violinplot
+        #컬럼 내 데이터의 비교 분포도 확인할 수 있는 그래프
+        #violinplot은 비교 대칭이기 때문에 hue와 split(좌우 둘로 나눠 표시)사용해 분석해야 한다.
+        sns.violinplot(tips[total_bill]) #하나의 데이터 분포를 볼 떄 
+        #둘 이상의 데이터 분포를 분석할 때 컬럼 하나를 가져오는 게 아닌, x/y를 지정하여 가져온다. 그리고 data=''반드시 붙여야 한다.
+        sns.violinplot(x='day',y='total_bill',hue='smoker',split=True,palette='rainbow',data=tips)
+        plt.show()
+        
+        #카.lmplot
+        #컬럼 간 선형관계를 확인하는데 용이한 그래프, 튀는 매출, 튀는 숫자를 확인할 수 있다. 
+        sns.lmplot(x='total_bill',y='tip',data=tips) #기본 함수
+        sns.lmplot(x='total_bill',y='tip',hue='smoker',col='day',col_wrap=2,height=8,data=tips) 
+        #hue를 통해 한가지 옵션 추가, col 매소드 활용, 해당 컬럼 기준으로 그래프를 자동으로 나눠서 분석, 
+        #col_wrap을 활용해 가로 2개로 지정 
+        
 
