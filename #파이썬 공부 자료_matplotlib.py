@@ -278,4 +278,21 @@ plt.rcParams["figure.figsize"] = (12, 9)
         #hue를 통해 한가지 옵션 추가, col 매소드 활용, 해당 컬럼 기준으로 그래프를 자동으로 나눠서 분석, 
         #col_wrap을 활용해 가로 2개로 지정 
         
+        #타.relplot
+        #컬럼간 상관관계를 볼 수 있지만 선형 관계를 바로 그리지 못한다. 
+        #형태는 scatterplot처럼 두 인자의 관계를 점으로 표현, 도수분포를 나타내는 건 아니다.
+        sns.relplot(x='total_bill',y='tip',data)
+        sns.relplot(x='total_bill',y='tip',hue='day',col='time',row='sex',height=8,palette='muted',data=tips)
+        #기본 xy에서 hue를 구분해 표기하고, time 기준으로 그래프를 col(나누어) 그리되, row(행)은 sex 단위로 나누서 그린다.
+        
+        #파.jointplot
+        #두 컬럼의 관계를 보여주는 scatter와 도수분표 histogram을 동시에 볼 수 있는 그래프
+        #jointplot은 col,row 다 안먹힌다. hue는 기본에서는 적용 가능하나 kind와 중복 사용 불가능 하다
+        #kind 통해 다양한 그래프를 포현할 수 있다.
+        #“scatter(산점도)” | “kde”(밀도분포, 그래프) | “hist”(도수분포,막대) | “hex(6각형 칸)” | “reg”(선형) | “resid(잔차분석)”
+        #잔차분석은 실측 - 예측 = 격차를 확인하고자 하는 통계학 
+        sns.jointplot(x='total_bill',y='tip',data=tips)
+        sns.jointplot(x='total_bill',y='tip',hue='sex',kind='rug',height=8,palette='muted',data=tips)
+        #일부 kind와 hue는 함께 사용하지 못한다. ex)resid
+        
 

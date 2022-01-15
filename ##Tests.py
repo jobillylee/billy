@@ -11,6 +11,6 @@ titanic = sns.load_dataset('titanic')
 tips = sns.load_dataset('tips')
 
 #폰트셋팅
-sns.lmplot(x='total_bill',y='tip',hue='smoker',col='day',col_wrap=2,height=8,data=tips)
+sns.jointplot(x='total_bill',y='tip',hue='sex',kind='rug',height=8,palette='muted',data=tips)
 
 plt.show()
